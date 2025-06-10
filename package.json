@@ -1,0 +1,41 @@
+{
+  "name": "gitlab-pipeline-overlay",
+  "version": "1.0.0",
+  "description": "Overlay for devops team to always see the gitlab pipeline and their status",
+  "keywords": [
+    "gitlab",
+    "devops",
+    "pipeline",
+    "overlay",
+    "status",
+    "monitoring",
+    "dashboard"
+  ],
+  "license": "ISC",
+  "author": "Po",
+  "type": "commonjs",
+  "main": "src/main/index.js",
+  "scripts": {
+    "start": "electron-forge start",
+    "dev": "electron --inspect=5858 .",
+    "build": "electron-builder",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^7.8.1",
+    "@electron-forge/maker-deb": "^7.8.1",
+    "@electron-forge/maker-rpm": "^7.8.1",
+    "@electron-forge/maker-squirrel": "^7.8.1",
+    "@electron-forge/maker-zip": "^7.8.1",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.8.1",
+    "@electron-forge/plugin-fuses": "^7.8.1",
+    "@electron/fuses": "^1.8.0",
+    "electron": "^30.0.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "electron-squirrel-startup": "^1.0.1"
+  }
+}
