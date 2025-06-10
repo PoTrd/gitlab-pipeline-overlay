@@ -11,14 +11,17 @@
     "monitoring",
     "dashboard"
   ],
-  "repository": "https://github.com/PoTrd/gitlab-pipeline-overlay",
   "license": "ISC",
   "author": "Po",
+  "type": "commonjs",
+  "main": "src/main/index.js",
   "scripts": {
-    "build": "tsc",
-    "watch": "tsc -w",
-    "lint": "eslint -c .eslintrc --ext .ts ./src",
-    "start": "npm run build && electron ./dist/main.js"
+    "start": "electron-forge start",
+    "dev": "electron --inspect=5858 .",
+    "build": "electron-builder",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "devDependencies": {
     "@electron-forge/cli": "^7.8.1",
@@ -29,9 +32,7 @@
     "@electron-forge/plugin-auto-unpack-natives": "^7.8.1",
     "@electron-forge/plugin-fuses": "^7.8.1",
     "@electron/fuses": "^1.8.0",
-    "@types/node": "^24.0.0",
-    "electron": "^30.0.0",
-    "typescript": "^5.8.3"
+    "electron": "^30.0.0"
   },
   "dependencies": {
     "dotenv": "^16.5.0",
