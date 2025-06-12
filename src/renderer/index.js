@@ -1,23 +1,10 @@
 // Configuration
 const { gitlabUrl, gitlabToken, gitlabProjectId } = require('../lib/config');
+const { pipelinesState } = require('../shared/state/pipelineState');
 
-// State management
-const pipelinesState = {
-    pipelines: [],
-    container: null,
-    init(containerId) {
-        this.container = document.getElementById(containerId);
-        if (!this.container) {
-            console.error('Container element not found');
-        }
-    },
-    setPipelines(pipelines) {
-        this.pipelines = pipelines;
-    },
-    removePipeline(id) {
-        this.pipelines = this.pipelines.filter(pipeline => pipeline.id !== id);
-    }
-};
+// State management for pipelines
+const pipelinesStateManager = new pipelinesState();
+const container = document.getElementById('container');
 
 // Fetch pipelines from GitLab API
 async function fetchPipelines() {
@@ -62,8 +49,8 @@ async function fetchPipelines() {
         renderPipelines();
     } catch (err) {
         console.error(`Error fetching pipelines: ${err.message}`);
-        if (pipelinesState.container) {
-            pipelinesState.container.innerText = `Error: ${err.message}`;
+        if (container) {
+            container.innerText = `Error: ${err.message}`;
         }
     }
 
@@ -73,25 +60,25 @@ async function fetchPipelines() {
 // Update the state with new pipeline data
 function updatePipelineState(newPipelines) {
     const uniquePipelines = newPipelines.filter(newPipeline =>
-        !pipelinesState.pipelines.some(existingPipeline => existingPipeline.id === newPipeline.id)
+        !pipelinesStateManager.pipelines.some(existingPipeline => existingPipeline.id === newPipeline.id)
     );
 
-    const combinedPipelines = [...pipelinesState.pipelines, ...uniquePipelines];
+    const combinedPipelines = [...pipelinesStateManager.pipelines, ...uniquePipelines];
     combinedPipelines.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
-    pipelinesState.setPipelines(combinedPipelines);
+    pipelinesStateManager.setPipelines(combinedPipelines);
 }
 
 // Render pipelines to the DOM
 function renderPipelines() {
-    if (!pipelinesState.container) return;
+    if (!container) return;
 
-    if (pipelinesState.pipelines.length === 0) {
-        pipelinesState.container.innerHTML = 'No running pipelines found.';
+    if (pipelinesStateManager.pipelines.length === 0) {
+        container.innerHTML = 'No running pipelines found.';
         return;
     }
 
-    pipelinesState.container.innerHTML = pipelinesState.pipelines.map(pipeline =>
+    container.innerHTML = pipelinesStateManager.pipelines.map(pipeline =>
         createPipelineElement(pipeline)
     ).join('');
 
@@ -115,7 +102,7 @@ function attachDeleteEventListeners() {
     document.querySelectorAll('.delete-btn').forEach(button => {
         button.addEventListener('click', function() {
             const id = Number(this.getAttribute('data-id'));
-            pipelinesState.removePipeline(id);
+            pipelinesStateManager.removePipeline(id);
             renderPipelines();
         });
     });
@@ -123,7 +110,6 @@ function attachDeleteEventListeners() {
 
 // Initialize the application
 function init() {
-    pipelinesState.init('container');
     fetchPipelines();
 }
 

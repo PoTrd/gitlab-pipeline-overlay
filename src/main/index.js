@@ -9,9 +9,10 @@ function createWindow() {
     frame: false,
     transparent: true,
     webPreferences: {
-        nodeIntegration: true,  // Pour accéder à require() dans renderer (dev uniquement)
-        contextIsolation: false
+        contextIsolation: false,
+        nodeIntegration: true,
     }
+
     });
 
     win.loadFile(path.join(__dirname, '../renderer/index.html'));
