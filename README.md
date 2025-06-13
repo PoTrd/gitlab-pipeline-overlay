@@ -14,7 +14,7 @@ npm install
 
 Create a `.env` file in the root of the project with the following content:
 
-```
+```plaintext
 GITLAB_API_URL=https://gitlab.example.com/api/v4
 GITLAB_API_TOKEN=your_gitlab_api_token
 GITLAB_PROJECT_ID=your_gitlab_project_id
@@ -26,10 +26,9 @@ GITLAB_PROJECT_ID=your_gitlab_project_id
 npm start
 ```
 
-or for dev
+or for dev we can add these lines
 
-```bash
-npm run dev
+```plaintext
+USE_MOCK=true
+NODE_ENV=development
 ```
-
-and then press `ctrl + maj + i` to open the console.
