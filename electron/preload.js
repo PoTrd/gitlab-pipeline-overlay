@@ -2,7 +2,10 @@ const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('api', {
     fetchPipelines: (apiKey, projectId, gitlabUrl) => ipcRenderer.invoke('fetch-pipelines', apiKey, projectId, gitlabUrl),
-    closeWindow: () => ipcRenderer.send('close-window')
+    closeWindow: () => ipcRenderer.send('close-window'),
+    saveConfig: (config) => ipcRenderer.send('save-config', config),
+    deleteConfig: () => ipcRenderer.invoke('delete-config'),
+    unlockToken: (secret) => ipcRenderer.send('unlock-token', secret),
 });
 
 contextBridge.exposeInMainWorld('env', {

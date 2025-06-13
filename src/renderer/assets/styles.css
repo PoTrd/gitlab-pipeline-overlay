@@ -50,7 +50,7 @@ button.delete-btn {
     gap: 8px;
 }
 
-.close-btn {
+.header-btn {
     -webkit-app-region: no-drag;
     background: transparent;
     border: none;

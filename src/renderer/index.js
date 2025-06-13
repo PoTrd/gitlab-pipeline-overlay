@@ -26,6 +26,16 @@ function renderPipelines(pipelines, container) {
     });
 }
 
+// Ajout du listener pour le bouton de suppression de config
+const deleteConfigBtn = document.getElementById('deleteConfigBtn');
+if (deleteConfigBtn && window.api && window.api.deleteConfig) {
+    deleteConfigBtn.addEventListener('click', () => {
+        if (confirm('Supprimer la configuration et fermer l’application ?')) {
+            window.api.deleteConfig();
+        }
+    });
+}
+
 async function main() {
     try {
         const merged = await fetchAndStorePipelines();
