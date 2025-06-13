@@ -14,7 +14,7 @@
   "license": "ISC",
   "author": "Po",
   "type": "commonjs",
-  "main": "src/main/index.js",
+  "main": "electron/main.js",
   "scripts": {
     "start": "electron-forge start",
     "dev": "electron --inspect=5858 .",

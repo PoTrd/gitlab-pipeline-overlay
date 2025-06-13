@@ -1,12 +1,18 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <link rel="stylesheet" href="./index.css">
-        <title>GitLab Pipelines</title>
-    </head>
-    <body>
-        <div id="container">Loading...</div>
-        <script src="./index.js"></script>
-    </body>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>GitLab Pipeline Overlay</title>
+    <link rel="stylesheet" href="./assets/styles.css" />
+</head>
+<body>
+    <div class="window-header">
+        <span class="window-title">GitLab Pipeline Overlay</span>
+        <span class="window-controls">
+            <button class="close-btn" title="Fermer" onclick="window.api.closeWindow()">✕</button>
+        </span>
+    </div>
+    <div id="container"></div>
+    <script type="module" src="./index.js"></script>
+</body>
 </html>
