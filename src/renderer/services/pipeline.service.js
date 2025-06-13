@@ -3,36 +3,30 @@ import { PipelineState } from '../state/pipelineState.js';
 
 const state = new PipelineState();
 
-function mergePipeline(existingLst, incomingLst) {
+// Fusionne les pipelines et met à jour ceux disparus du fetch (ex: terminés)
+export async function mergePipeline(existingLst, incomingLst) {
     const existingIds = new Set(existingLst.map(p => p.id));
     const incomingIds = new Set(incomingLst.map(p => p.id));
-    const missingPipelines = existingLst.filter(p => !incomingIds.has(p.id));
-    const merged = [...existingLst];
+    const merged = [...incomingLst];
 
-    incomingLst.forEach(p => {
-        if (existingIds.has(p.id)) {
-            const index = merged.findIndex(existing => existing.id === p.id);
-            if (index !== -1) {
-                merged[index] = p;
-                return;
+    // Pipelines qui étaient dans l'existant mais plus dans le fetch (probablement terminés)
+    const missingIds = existingLst.filter(p => !incomingIds.has(p.id)).map(p => p.id);
+
+    // On fetch leur statut à jour
+    const updatedPipelines = await Promise.all(
+        missingIds.map(async id => {
+            try {
+                return await fetchPipeline(id);
+            } catch (e) {
+                Logger.warn(`Impossible de mettre à jour le pipeline ${id}: ${e.message}`);
+                // On garde l'ancien pipeline si erreur
+                return existingLst.find(p => p.id === id);
             }
-        }
-        merged.push(p);
-    });
+        })
+    );
 
-    const missingPipelinesIds = new Set(missingPipelines.map(p => p.id));
-    merged.forEach(p => {
-        if(missingPipelinesIds.has(p.id)) {
-            const updatedPipeline = fetchPipeline(p.id);
-            if (updatedPipeline) {
-                const index = merged.findIndex(existing => existing.id === p.id);
-                if (index !== -1) {
-                    merged[index] = updatedPipeline;
-                }
-            }
-        }
-    });
-
+    // On ajoute les pipelines mis à jour à la liste fusionnée
+    merged.push(...updatedPipelines);
     return merged;
 }
 
@@ -51,7 +45,7 @@ export async function fetchAndStorePipelines() {
     }
     Logger.info('Pipelines fetched:', data.length);
     const existing = state.getPipelines();
-    const merged = mergePipeline(existing, data);
+    const merged = await mergePipeline(existing, data);
     state.setPipelines(merged);
     return merged;
 }
