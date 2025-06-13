@@ -31,4 +31,5 @@ or for dev we can add these lines
 ```plaintext
 USE_MOCK=true
 NODE_ENV=development
+DEBUG=true
 ```

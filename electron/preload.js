@@ -9,5 +9,6 @@ contextBridge.exposeInMainWorld('env', {
     GITLAB_URL: process.env.GITLAB_URL,
     GITLAB_TOKEN: process.env.GITLAB_TOKEN,
     GITLAB_PROJECT_ID: process.env.GITLAB_PROJECT_ID,
-    USE_MOCK: process.env.USE_MOCK || 'false'
+    USE_MOCK: process.env.USE_MOCK || 'false',
+    DEBUG: process.env.DEBUG || 'false'
 });
