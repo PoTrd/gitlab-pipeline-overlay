@@ -1,28 +1,53 @@
-import { EventEmitter } from 'events';
+// class PipelineStore {
+//     constructor() {
+//         this.pipelines = [];
+//     }
+//
+//     setPipelines(pipelines) {
+//         this.pipelines = pipelines;
+//         this.emit('updated', this.pipelines);
+//     }
+//
+//     getPipelines() {
+//         return this.pipelines;
+//     }
+//
+//     removePipelineById(id) {
+//         this.pipelines = this.pipelines.filter(p => p.id !== id);
+//         this.emit('updated', this.pipelines);
+//         return this.pipelines;
+//     }
+//
+//     onUpdate(callback) {
+//         this.on('updated', callback);
+//     }
+//
+// }
+//
+// const pipelineStore = new PipelineStore();
+// export default pipelineStore;
 
-class PipelineStore extends EventEmitter {
+class PipelineStore {
+    #pipelines;
+    
     constructor() {
-        super();
-        this.pipelines = [];
-    }
-
-    setPipelines(pipelines) {
-        this.pipelines = pipelines;
-        this.emit('updated', this.pipelines);
+        console.debug('PipelineStore initialized');
+        this.#pipelines = [];
     }
 
     getPipelines() {
-        return this.pipelines;
+        return this.#pipelines;
     }
 
-    onUpdate(callback) {
-        this.on('updated', callback);
+    setPipelines(pipelinesArray) {
+        console.debug('Setting pipelines:', pipelinesArray);
+        this.#pipelines = pipelinesArray;
+        console.log('Pipelines set to', pipelinesArray);
     }
 
-    offUpdate(callback) {
-        this.off('updated', callback);
+    removePipeline(id) {
+        this.#pipelines = this.#pipelines.filter(p => p.id !== id);
     }
 }
 
-const pipelineStore = new PipelineStore();
-export default pipelineStore;
+module.exports = { PipelineStore };

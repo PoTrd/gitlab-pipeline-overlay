@@ -30,6 +30,7 @@ function saveConfig(data) {
         fs.mkdirSync(configDir, { recursive: true });
     }
     fs.writeFileSync(configFile, encrypt(data), 'utf-8');
+    console.log('Configuration saved successfully in secureConfig.json, path:', configDir);
 }
 
 function getConfig() {

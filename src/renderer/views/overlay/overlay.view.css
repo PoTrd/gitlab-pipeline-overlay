@@ -13,6 +13,11 @@ body {
   background-color: rgba(0, 0, 0, 0.1);
   padding: 4px 8px;
   border-bottom: 1px solid #ccc;
+  -webkit-app-region: drag;
+}
+
+.no-drag, .window-controls button {
+  -webkit-app-region: no-drag;
 }
 
 .window-title {

@@ -1,4 +1,9 @@
+// const { PipelineStore } = require('../../store/pipeline.store');
+// TODO: Expose PipelineStore via preload and use: const { PipelineStore } = window.PipelineStore;
+const { PipelineStore } = window.PipelineStore || {};
+
 const container = document.getElementById('container');
+const store = new PipelineStore();
 
 function renderPipelines(pipelines, container) {
     if (!container) return;
@@ -16,25 +21,29 @@ function renderPipelines(pipelines, container) {
 
     container.querySelectorAll('.delete-btn').forEach(btn => {
         btn.addEventListener('click', e => {
-        const id = btn.getAttribute('data-id');
-        const updated = removePipeline(Number(id));
-        renderPipelines(updated, container);
+            const id = btn.getAttribute('data-id');
+            removePipeline(Number(id));
         });
     });
+}
+
+function removePipeline(pipelineId) {
+    store.removePipeline(pipelineId);
 }
 
 async function main() {
     try {
         const lstPipelines = await window.api_pipelines.fetchRunningPipelines();
-        renderPipelines(lstPipelines, container);
+        await store.setPipelines(lstPipelines);
+        renderPipelines(store.getPipelines(), container);
     } catch (e) {
-        window.apiDebug.error('Fetch error:', e.message);
+        window.api_debug.error('Fetch error:', e.message);
         container.innerHTML = `<div style="color:red;">Erreur: ${e.message}</div>`;
     }
 
     setTimeout(main, 10000);
-    }
+}
 
-    window.onload = () => {
-    main();
+window.onload = () => {
+    main()
 };

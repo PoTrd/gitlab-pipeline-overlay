@@ -22,7 +22,6 @@ async function fetchPipelines({ url, token, projectId }) {
 
 async function fetchRunningPipelines({ url, token, projectId }) {
     if(process.env.NODE_ENV === 'development' && process.env.MOCK_DATA === 'true') {
-        console.warn('Using mock data for running pipelines');
         const data = require("../models/mock-pipelines.json");
         return data.map(Pipeline.fromApiResponse);
     }
