@@ -1,6 +1,3 @@
-import { fetchAndStorePipelines, getStoredPipelines, removePipeline } from '../services/pipeline.service.js';
-import { Logger } from '../services/logging.service.js';
-
 const container = document.getElementById('container');
 
 function renderPipelines(pipelines, container) {
@@ -28,8 +25,8 @@ function renderPipelines(pipelines, container) {
 
 async function main() {
     try {
-        const merged = await fetchAndStorePipelines();
-        renderPipelines(merged, container);
+        const lstPipelines = await window.api.getPipelines();
+        renderPipelines(lstPipelines, container);
     } catch (e) {
         Logger.error('Fetch error:', e.message);
         container.innerHTML = `<div style="color:red;">Erreur: ${e.message}</div>`;

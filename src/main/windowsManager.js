@@ -1,6 +1,6 @@
 const { BrowserWindow } = require('electron');
 const path = require('path');
-const { getConfig } = require('./services/config.service');
+const { getConfig } = require('../shared/services/config.service');
 
 let mainWindow = null;
 
@@ -15,9 +15,9 @@ const createMainWindow = async () => {
         frame: false,
         alwaysOnTop: true,
         webPreferences: {
-        preload: path.join(__dirname, '../../preload.js'),
-        contextIsolation: true,
-        nodeIntegration: false,
+            preload: path.join(__dirname, './preload.js'),
+            contextIsolation: true,
+            nodeIntegration: false,
         },
     });
 
