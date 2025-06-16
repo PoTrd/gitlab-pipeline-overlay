@@ -1,10 +1,10 @@
 const { ipcMain } = require('electron');
 const configService = require('../../shared/services/config.service');
-
+const windowsManager = require('../windowsManager');
 
 ipcMain.handle('SAVE_CONFIG', async (_event, config) => {
     configService.saveConfig(config);
-    await configService.reloadToOverlay();
+    await windowsManager.navigateTo('overlay');
 });
 
 ipcMain.handle('READ_CONFIG', async () => {
@@ -18,4 +18,8 @@ ipcMain.handle('READ_CONFIG', async () => {
 
 ipcMain.handle('DELETE_CONFIG', async () => {
     await configService.deleteConfig();
+    const win = windowsManager.getMainWindow();
+    if (win) {
+        await win.close();
+    }
 });

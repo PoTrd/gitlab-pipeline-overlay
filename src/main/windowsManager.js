@@ -24,21 +24,15 @@ const createMainWindow = async () => {
     await mainWindow.loadFile(path.join(__dirname, `../renderer/views/${view}`));
 };
 
-const reloadToOverlay = async () => {
+const navigateTo = async (view) => {
     if (!mainWindow) return;
-    await mainWindow.loadFile(path.join(__dirname, '../renderer/views/overlay/overlay.view.html'));
+    await mainWindow.loadFile(path.join(__dirname, `../renderer/views/${view}/${view}.view.html`));
 };
-
-const reloadToConfig = async () => {
-    if (!mainWindow) return;
-    await mainWindow.loadFile(path.join(__dirname, '../renderer/views/config/config.view.html'));
-    };
 
 const getMainWindow = () => mainWindow;
 
 module.exports = {
     createMainWindow,
-    reloadToOverlay,
-    reloadToConfig,
+    navigateTo,
     getMainWindow
 };

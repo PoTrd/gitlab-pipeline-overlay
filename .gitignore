@@ -1,4 +1,12 @@
+# Environment variables
 .env
+
+# Dependencies
 node_modules
+
+# Build output
 out/
+
+# IDE
 .vscode
+.idea
