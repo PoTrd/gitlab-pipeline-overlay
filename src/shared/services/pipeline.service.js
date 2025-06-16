@@ -1,5 +1,5 @@
-const fetch = require('node-fetch');
 const { Pipeline } = require('../models/pipeline');
+require('dotenv').config();
 
 async function fetchJsonData({ url, token, endpoint }) {
     const res = await fetch(`${url}/api/v4/${endpoint}`, {
@@ -21,6 +21,11 @@ async function fetchPipelines({ url, token, projectId }) {
 }
 
 async function fetchRunningPipelines({ url, token, projectId }) {
+    if(process.env.NODE_ENV === 'development' && process.env.MOCK_DATA === 'true') {
+        console.warn('Using mock data for running pipelines');
+        const data = require("../models/mock-pipelines.json");
+        return data.map(Pipeline.fromApiResponse);
+    }
     const data = await fetchJsonData({ url, token, endpoint: `projects/${projectId}/pipelines?status=running` });
     if (!Array.isArray(data)) {
         throw new Error('Unexpected response format: expected an array of pipelines');
