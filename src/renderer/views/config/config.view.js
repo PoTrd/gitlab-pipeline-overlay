@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
       token: document.querySelector('#token').value,
       projectId: document.querySelector('#projectId').value,
     };
-    await window.api.saveConfig(config);
+    await window.api_config.saveConfig(config);
     location.reload();
   });
 });

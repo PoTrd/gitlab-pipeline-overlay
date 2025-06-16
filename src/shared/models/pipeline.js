@@ -1,4 +1,4 @@
-export class Pipeline {
+class Pipeline {
     constructor(
     id,
     iid,
@@ -37,5 +37,6 @@ export class Pipeline {
             data.web_url
         );
     }
-
 }
+
+module.exports = { Pipeline };

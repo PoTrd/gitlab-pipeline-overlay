@@ -1,9 +1,9 @@
 const { app, ipcMain } = require('electron');
 const path = require('path');
 const { createMainWindow, getMainWindow } = require('./windowsManager');
-require('./ipcHandlers/fetchPipelines');
-require('./ipcHandlers/saveConfig');
-require('./ipcHandlers/deleteConfig');
+require('./ipcHandlers/pipelineRepository');
+require('./ipcHandlers/debugRepository');
+require('./ipcHandlers/configRepository');
 
 ipcMain.handle('CLOSE_WINDOW', () => {
     const win = getMainWindow();

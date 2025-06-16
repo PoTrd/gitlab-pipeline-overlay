@@ -25,10 +25,10 @@ function renderPipelines(pipelines, container) {
 
 async function main() {
     try {
-        const lstPipelines = await window.api.getPipelines();
+        const lstPipelines = await window.api_pipelines.fetchRunningPipelines();
         renderPipelines(lstPipelines, container);
     } catch (e) {
-        Logger.error('Fetch error:', e.message);
+        window.apiDebug.error('Fetch error:', e.message);
         container.innerHTML = `<div style="color:red;">Erreur: ${e.message}</div>`;
     }
 
