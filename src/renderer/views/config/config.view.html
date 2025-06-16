@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Configuration GitLab</title>
+    <link rel="stylesheet" href="./config.view.css" />
+</head>
+<body>
+    <div class="config-container">
+        <h1>Configuration GitLab</h1>
+        <label for="url">URL GitLab :</label>
+        <input type="text" id="url" placeholder="https://gitlab.com" />
+
+        <label for="token">Token personnel :</label>
+        <input type="password" id="token" placeholder="Token" />
+
+        <label for="projectId">ID du projet :</label>
+        <input type="text" id="projectId" placeholder="123456" />
+
+        <button id="submit">Enregistrer</button>
+    </div>
+    <script type="module" src="./config.view.js"></script>
+</body>
+</html>
