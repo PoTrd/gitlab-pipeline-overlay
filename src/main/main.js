@@ -4,13 +4,16 @@ const { createMainWindow, getMainWindow } = require('./windowsManager');
 require('./ipcHandlers/pipelineRepository');
 require('./ipcHandlers/debugRepository');
 require('./ipcHandlers/configRepository');
+require('./ipcHandlers/pipelineStoreRepository');
 
 ipcMain.handle('CLOSE_WINDOW', () => {
     const win = getMainWindow();
     win?.close();
 });
 
-app.whenReady().then(createMainWindow);
+app.whenReady().then(() => {
+    createMainWindow();
+});
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit();

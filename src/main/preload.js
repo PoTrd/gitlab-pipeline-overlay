@@ -21,3 +21,10 @@ contextBridge.exposeInMainWorld('api_debug', {
     warn: (message) => ipcRenderer.invoke('LOG_WARN', message),
     error: (message) => ipcRenderer.invoke('LOG_ERROR', message),
 });
+
+contextBridge.exposeInMainWorld('api_pipelineStore', {
+    getLstPipelines: () => ipcRenderer.invoke('GET_LST_PIPELINES'),
+    getPipeline: (pipelineId) => ipcRenderer.invoke('GET_PIPELINE', pipelineId),
+    setLstPipelines: (store) => ipcRenderer.invoke('SET_LST_PIPELINES', store),
+    removePipeline: (pipelineId) => ipcRenderer.invoke('REMOVE_PIPELINE', pipelineId)
+});

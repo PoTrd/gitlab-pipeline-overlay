@@ -1,9 +1,4 @@
-// const { PipelineStore } = require('../../store/pipeline.store');
-// TODO: Expose PipelineStore via preload and use: const { PipelineStore } = window.PipelineStore;
-const { PipelineStore } = window.PipelineStore || {};
-
 const container = document.getElementById('container');
-const store = new PipelineStore();
 
 function renderPipelines(pipelines, container) {
     if (!container) return;
@@ -28,14 +23,16 @@ function renderPipelines(pipelines, container) {
 }
 
 function removePipeline(pipelineId) {
-    store.removePipeline(pipelineId);
+    window.api_pipelineStore.removePipeline(pipelineId);
 }
 
 async function main() {
     try {
-        const lstPipelines = await window.api_pipelines.fetchRunningPipelines();
-        await store.setPipelines(lstPipelines);
-        renderPipelines(store.getPipelines(), container);
+        // Await the fetch and store operations
+        const data = await window.api_pipelines.fetchRunningPipelines();
+        await window.api_pipelineStore.setLstPipelines(data);
+        const lstPipelines = await window.api_pipelineStore.getLstPipelines();
+        renderPipelines(Array.isArray(lstPipelines) ? lstPipelines : [], container);
     } catch (e) {
         window.api_debug.error('Fetch error:', e.message);
         container.innerHTML = `<div style="color:red;">Erreur: ${e.message}</div>`;
